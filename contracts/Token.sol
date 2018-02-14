@@ -28,14 +28,14 @@ contract Token {
 
 //Functions
   //Wh -> Token Convertion
-  function whToToken (uint256 _wh) ownerOnly returns (uint256) {
+  function whToToken (uint256 _wh) returns (uint256) {
     //TODO:  Algorithm for conversion
     uint256 token = _wh; 
     return token;
   }
 
   //Token -> Wh
-  function tokenToWh (uint256 _token) ownerOnly returns (uint256) {
+  function tokenToWh (uint256 _token) returns (uint256) {
     uint256 wh = _token;
     return wh;
   }
