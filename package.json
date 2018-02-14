@@ -1,0 +1,35 @@
+{
+  "name": "currenTcy",
+  "version": "1.0.0",
+  "description": "BIOTS 2018 hackathon project",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brathis/currenTcy.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brathis/currenTcy/issues"
+  },
+  "homepage": "https://github.com/brathis/currenTcy#readme",
+  "dependencies": {
+    "mithril": "^1.1.6",
+    "truffle": "^4.0.6",
+    "truffle-contract": "^3.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^4.17.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "webpack": "^3.11.0",
+    "webpack-dev-server": "^2.11.1"
+  }
+}
