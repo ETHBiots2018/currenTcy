@@ -2,11 +2,9 @@
   "name": "currenTcy",
   "version": "1.0.0",
   "description": "BIOTS 2018 hackathon project",
-  "main": "truffle-config.js",
-  "directories": {
-    "test": "test"
-  },
   "scripts": {
+    "watch": "webpack --watch",
+    "server": "webpack-dev-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -14,8 +12,11 @@
     "url": "git+https://github.com/brathis/currenTcy.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "contributors": [
+    "Claudio Fanconi <fanconic@student.ethz.ch> (https://github.com/fanconic)",
+    "Mathis Dedial <mathis@dedial.net> (https://github.com/brathis)"
+  ],
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/brathis/currenTcy/issues"
   },
