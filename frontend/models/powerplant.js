@@ -19,4 +19,22 @@ export default class PowerPlant {
       window.alert('Power plant created');
     });
   }
+
+  static addUser() {
+    // add user to power plant
+    const smartMeter = document.getElementById('smartmeter').value;
+    const user = document.getElementById('user').value;
+    const percentage = document.getElementById('percentage').value;
+    this.contract.addPowerPlantUser(smartMeter, user, percentage, { from: window.currentAccount }).then(() => {
+      window.alert('User added');
+    });
+  }
+
+  static removeUser() {
+    // add user to power plant
+    const smartMeter = document.getElementById('smartmeter').value;
+    const user = document.getElementById('user').value;
+    this.contract.removePowerPlantUser(smartMeter, user, { from: window.currentAccount }).then(() => {
+      window.alert('User removed');
+    });
 }
