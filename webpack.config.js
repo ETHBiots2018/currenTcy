@@ -7,6 +7,7 @@ module.exports = {
     port: 9000,
     watchContentBase: true,
   },
+  devtool: 'source-map',
   entry: './frontend/index.js',
   output: {
     filename: 'bundle.js',

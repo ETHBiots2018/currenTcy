@@ -8,7 +8,7 @@ const m = require('mithril');
 
 // Contract address
 // Set as property of window object... better than using globals I guess...
-window.contractAddress = '0x345ca3e014aaf5dca488057592ee47305d9b3e10';
+window.contractAddress = '0x0d8cc4b8d15d4c3ef1d70af0071376fb26b5669b';
 
 // Promisification of getAccounts()
 // Works by ignoring the error and only passing on the result
