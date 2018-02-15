@@ -1,6 +1,7 @@
 import Dashboard from './views/dashboard';
 import Register from './views/register';
 import PowerPlant from './views/powerplant';
+import Meter from './views/meter';
 import Layout from './views/layout';
 
 const m = require('mithril');
@@ -39,6 +40,11 @@ getAccounts().then((accounts) => {
     '/powerplant': {
       view() {
         return m(Layout, m(PowerPlant));
+      },
+    },
+    '/meter': {
+      view() {
+        return m(Layout, m(Meter));
       },
     },
   });

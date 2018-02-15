@@ -11,10 +11,13 @@ export default class Layout {
         ]),
         m('ul.navbar-nav', [
           m('li.nav-item', [
-            m('a', { href: '/register', oncreate: m.route.link }, 'Smart-Meter Admin'),
+            m('a', { href: '/register', oncreate: m.route.link }, 'Smart Meter Admin'),
           ]),
           m('li.nav-item', [
             m('a', { href: '/powerplant', oncreate: m.route.link }, 'Power Plant Admin'),
+          ]),
+          m('li.nav-item', [
+            m('a', { href: '/meter', oncreate: m.route.link }, 'Smart Meter'),
           ]),
           m('li.nav-item.ml-auto', [
             m('a', { href: `https://etherscan.io/address/${global.currentAccount}` }, global.currentAccount),

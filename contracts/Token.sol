@@ -1,8 +1,6 @@
 pragma solidity ^0.4.4;
 
 // TODO:
-// - Multiple users per smart meter
-// - Implementation of smartMeterOnly modifier
 // - Check visibility / privacy: https://solidity.readthedocs.io/en/develop/contracts.html#visibility-and-getters
 // - Security concerns like race conditions, etc.: https://solidity.readthedocs.io/en/develop/security-considerations.html
 
@@ -72,10 +70,10 @@ contract Token {
 
   // unregister smart meter (consuming or producing)
   function unregSmartMeter(address _smartMeter) public ownerOnly {
-   registered[_smartMeter] = false; 
+    registered[_smartMeter] = false; 
   }
 
-  // Adding a new powerplant
+  // Adding a new powerplants
   function addPowerPlant(address _smartMeter) public ownerOnly {
     require(registered[_smartMeter] == true);
     PowerPlant memory plant;
