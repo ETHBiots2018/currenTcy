@@ -21,8 +21,13 @@ contract Token {
   // map a boolean true, if a smartmeter is registered
   mapping(address => bool) registered;
 
-  // Implicit constructor to set ownership  
-  address public owner = msg.sender;
+  // owner
+  address owner;
+
+  // set owner
+  function Token() public {
+    owner = msg.sender;
+  }
 
   // For functions which can only be performed by the owner
   modifier ownerOnly {
