@@ -29,6 +29,12 @@ contract Token {
     owner = msg.sender;
   }
 
+  struct PowerPlant {
+    mapping(address => uint256) percentages;
+    address[] users;
+  }
+  mapping(address => PowerPlant) powerplants; // maps smartmeter to a powerplant with diffrent users which own percentages of it
+
   // For functions which can only be performed by the owner
   modifier ownerOnly {
     require(msg.sender == owner);
@@ -68,6 +74,35 @@ contract Token {
    registered[_smartMeter] = false; 
   }
 
+    // Adding a new powerplant
+  function addPowerPlant(address _smartMeter) public ownerOnly {
+    PowerPlant memory plant;
+    powerplants[_smartMeter] = plant;
+  }
+
+  // Adding new users to an existing powerplant
+  function addPowerPlantUser(address _smartMeter, address _user, uint256 _percentage) public ownerOnly {
+    powerplants[_smartMeter].percentages[_user] = _percentage;
+    powerplants[_smartMeter].users.push(_user);
+  }
+
+  //removing users from an existing powerplant
+  function removePowerPlantUser(address _smartMeter, address _user) public ownerOnly {
+    delete powerplants[_smartMeter].percentages[_user];
+    for (uint256 i = 0; i < powerplants[_smartMeter].users.length; i++) {
+      if (powerplants[_smartMeter].users[i] == _user) {
+        delete powerplants[_smartMeter].users[i];
+      }
+    }
+  }
+
+  //transfer pertentages between existing powerplant users
+  function tranferUserPercentage(address _smartMeter, address _from, address _to, uint256 _percentageTo) public ownerOnly {
+    var plant = powerplants[_smartMeter];
+    plant.percentages[_from] -= _percentageTo;
+    plant.percentages[_to] += _percentageTo;
+  }
+
 
   /*
    * The following functions are only for the smartmeters
@@ -77,7 +112,11 @@ contract Token {
 
   // Credit the User tokens for Wh produced
   function produce (uint256 wh) public smartMeterOnly {
-    balanceOf[user[msg.sender]] += whToToken(wh);
+    var plant = powerplants[msg.sender];
+    for (uint256 i = 0; i < plant.users.length; i++) {
+      var temp = plant.users[i];
+      balanceOf[user[temp]] += whToToken(wh) * 100 / plant.percentages[temp];
+    }
   }
 
   // Deduction of tokens for Wh consumed
