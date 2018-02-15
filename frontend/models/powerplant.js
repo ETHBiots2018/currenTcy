@@ -30,7 +30,7 @@ export default class PowerPlant {
     });
   }
 
-  static addUser() {
+  static removeUser() {
     // add user to power plant
     const smartMeter = document.getElementById('smartmeter').value;
     const user = document.getElementById('user').value;
