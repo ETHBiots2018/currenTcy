@@ -29,4 +29,12 @@ export default class PowerPlant {
       window.alert('User added');
     });
   }
+
+  static addUser() {
+    // add user to power plant
+    const smartMeter = document.getElementById('smartmeter').value;
+    const user = document.getElementById('user').value;
+    this.contract.removePowerPlantUser(smartMeter, user, { from: window.currentAccount }).then(() => {
+      window.alert('User removed');
+    });
 }

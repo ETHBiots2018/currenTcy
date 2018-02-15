@@ -32,6 +32,18 @@ export default class PowerPlant {
         ]),
         m('button.btn#AddButton', { onclick: Model.addUser.bind(this.model) }, 'Add'),
       ]),
+      m('h1', 'Remove user from Power Plant'),
+      m('form', [
+        m('.form-group', [
+          m('label[for=smartmeter]'),
+          m('input.form-control#smartmeter', { placeholder: 'Enter smart meter address here' }),
+        ]),
+        m('.form-group', [
+          m('label[for=user]'),
+          m('input.form-control#user', { placeholder: 'Enter user address here' }),
+        ]),
+        m('button.btn#AddButton', { onclick: Model.removeUser.bind(this.model) }, 'Remove'),
+      ]),
     ]);
   }
 }
