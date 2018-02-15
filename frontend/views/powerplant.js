@@ -16,7 +16,7 @@ export default class PowerPlant {
         ]),
         m('button.btn#CreateButton', { onclick: Model.create.bind(this.model) }, 'Create'),
       ]),
-      m('h1', 'Add user to powerplant'),
+      m('h1', 'Add user to Power Plant'),
       m('form', [
         m('.form-group', [
           m('label[for=smartmeter]'),

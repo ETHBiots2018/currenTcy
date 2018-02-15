@@ -5,7 +5,9 @@ export default class Layout {
     return m('.container-fluid', [
       m('nav.navbar', [
         m('span.navbar-brand', [
-          m('img', { src: '../img/currentcy.png' }),
+          m('a', { href: '/', oncreate: m.route.link }, [
+            m('img', { src: '../img/currentcy.png' }),
+          ]),
         ]),
         m('ul.navbar-nav', [
           m('li.nav-item', [
