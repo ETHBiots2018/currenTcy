@@ -74,7 +74,7 @@ contract Token {
    registered[_smartMeter] = false; 
   }
 
-    // Adding a new powerplant
+  // Adding a new powerplant
   function addPowerPlant(address _smartMeter) public ownerOnly {
     PowerPlant memory plant;
     powerplants[_smartMeter] = plant;
