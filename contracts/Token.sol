@@ -1,50 +1,48 @@
 pragma solidity ^0.4.4;
 
 contract Token {
-//Contract Variables
-  //Mapping
+  // Ledger
   mapping(address => uint256) public balanceOf;
-  //Who's powerplant is it?
+
+  // Map smart meters to their owners
   mapping(address => address) public user;
-   //Adress
+
+  // Implicit constructor to set ownership  
   address public owner = msg.sender;
 
-//Functions
-  //Wh -> Token Convertion
-  function whToToken (uint256 wh) returns (uint256) {
-    //TODO:  Algorithm for conversion
-    uint256 token = wh; 
-    return token;
-  }
-
-  //Token -> Wh
-  function tokenToWh (uint256 token) returns (uint256) {
-    uint256 wh = token;
+  // Wh -> Token conversion
+  function whToToken (uint256 wh) public pure returns (uint256) {
+    // As of right now, this performs a 1:1 conversion of Wh to tokens
+    // May be adapted in future implementations
     return wh;
   }
 
-  //Credit the User tokens for Wh produced
-  function produce (uint256 wh) public{
+  // Token -> Wh conversion
+  function tokenToWh (uint256 token) public pure returns (uint256) {
+    // As of right now, this performs a 1:1 conversion of Wh to tokens
+    // May be adapted in future implementations
+    return token;
+  }
+
+  // Credit the User tokens for Wh produced
+  function produce (uint256 wh) public {
+    // TODO: Only trusted smart meters should be able to call this function
     balanceOf[user[msg.sender]] += whToToken(wh);
   }
 
-  //Deduction of tokens for Wh consumed
-  function consume (uint256 wh) public returns(uint256) {
+  // Deduction of tokens for Wh consumed
+  function consume (uint256 wh) public returns (uint256) {
+    // TODO: Only trusted smart meters should be able to call this function
     uint256 consumed = 0;
-    if(balanceOf[user[msg.sender]] >= whToToken(wh)){
+    if (balanceOf[user[msg.sender]] >= whToToken(wh)) {
+      // Sufficient balance to cover entire transaction
       consumed = wh;
       balanceOf[user[msg.sender]] -= whToToken(wh);
-    }
-    else {
+    } else {
+      // Insufficient balance, use up remaining balance
       consumed = balanceOf[user[msg.sender]];
       balanceOf[user[msg.sender]] = 0;
     }
     return consumed;
-  }
-
-  string m = "bitch yes!";
-  //Test Function
-  function greeting() returns (string){
-    return m;
   }
 }
