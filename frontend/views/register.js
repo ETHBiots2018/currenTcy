@@ -12,7 +12,7 @@ export default class Meter {
       m('h1', 'Register smart meter'),
       m('form', [
         m('.form-group', [
-          m('label[for=address]'),
+          m('label[for=address]', 'Smart Meter Address'),
           m('input.form-control#address', { id: 'address', placeholder: 'Enter smart meter adress' }),
         ]),
         m('button.btn#registerButton', { onclick: Model.register.bind(this.model) }, 'Register'),
@@ -21,11 +21,11 @@ export default class Meter {
       m('h1', 'Connect user to smart meter'),
       m('form', [
         m('.form-group', [
-          m('label[for=connectSmartMeter]'),
+          m('label[for=connectSmartMeter]', 'Smart Meter Address'),
           m('input.form-control#connectSmartMeter', { id: 'connectSmartMeter', placeholder:'Enter smart meter address' }),
         ]),
         m('.form-group', [
-          m('label[for=connectUser]'),
+          m('label[for=connectUser]', 'User Address'),
           m('input.form-control#connectUser', { id: 'connectUser', placeholder:'Enter user address'}),
         ]),
         m('button.btn#connectButton', { onclick: Model.connect.bind(this.model) }, 'Connect')
