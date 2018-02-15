@@ -25,4 +25,12 @@ export default class Register {
       window.alert('Smart meter unregistered');
     });
   }
+
+  static connect() {
+    const meter = document.getElementById('connectSmartMeter').value;
+    const user = document.getElementById('connectUser').value;
+    this.contract.setUser(meter, user, { from: window.currentAccount }).then(() => {
+      window.alert('User connected with smart meter');
+    });
+  }
 }
