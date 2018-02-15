@@ -1,8 +1,7 @@
 const m = require('mithril');
 
 export default class Layout {
-  view(vnode) {
-    this.stfuEslint = true;
+  static view(vnode) {
     return m('.container-fluid', [
       m('nav.navbar', [
         m('span.navbar-brand', [

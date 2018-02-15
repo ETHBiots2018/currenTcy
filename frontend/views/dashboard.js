@@ -7,7 +7,6 @@ export default class Dashboard {
     this.model = new Model();
   }
   view() {
-    this.stfuEslint = true;
     return m('main', [
       m('.jumbotron', [
         m('.d-flex.justify-content-center.align-items-center', [

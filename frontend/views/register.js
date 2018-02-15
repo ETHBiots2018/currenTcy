@@ -8,7 +8,6 @@ export default class Meter {
   }
 
   view() {
-    this.stfuEslint = true;
     return m('main', [
       m('h1', 'Register smart meter'),
       m('form', [

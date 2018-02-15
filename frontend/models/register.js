@@ -7,22 +7,22 @@ export default class Register {
     const token = contract({ abi: json.abi });
     token.setProvider(web3.currentProvider);
     // connect to contract on blockchain
-    token.at(global.contractAddress).then((instance) => {
+    token.at(window.contractAddress).then((instance) => {
       this.contract = instance;
     });
   }
 
-  static register(event) {
+  static register() {
     const meterAddress = document.getElementById('address').value;
-    this.contract.regSmartMeter(meterAddress, { from: global.currentAccount }).then((result) => {
-      alert('Smart meter registered');
+    this.contract.regSmartMeter(meterAddress, { from: window.currentAccount }).then(() => {
+      window.alert('Smart meter registered');
     });
   }
 
-  static unregister(event) {
+  static unregister() {
     const meterAddress = document.getElementById('address').value;
-    this.contract.unregSmartMeter(meterAddress, { from: global.currentAccount }).then((result) => {
-      alert('Smart meter unregistered');
+    this.contract.unregSmartMeter(meterAddress, { from: window.currentAccount }).then(() => {
+      window.alert('Smart meter unregistered');
     });
   }
 }

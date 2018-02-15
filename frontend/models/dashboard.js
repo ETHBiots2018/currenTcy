@@ -10,8 +10,8 @@ export default class Dashboard {
     const token = contract({ abi: json.abi });
     token.setProvider(web3.currentProvider);
     // connect to contract on blockchain
-    token.at(global.contractAddress).then((instance) => {
-      instance.balanceOf(this.currentAccount).then((balance) => {
+    token.at(window.contractAddress).then((instance) => {
+      instance.balanceOf(window.currentAccount).then((balance) => {
         // balance is a BigNumber
         this.balance = balance.toNumber();
         // manually trigger redraw, since we're not using m.request()
