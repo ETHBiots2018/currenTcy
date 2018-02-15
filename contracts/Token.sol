@@ -76,18 +76,21 @@ contract Token {
 
   // Adding a new powerplant
   function addPowerPlant(address _smartMeter) public ownerOnly {
+    require(registered[_smartMeter] == true);
     PowerPlant memory plant;
     powerplants[_smartMeter] = plant;
   }
 
   // Adding new users to an existing powerplant
   function addPowerPlantUser(address _smartMeter, address _user, uint256 _percentage) public ownerOnly {
+    require(registered[_smartMeter] == true);
     powerplants[_smartMeter].percentages[_user] = _percentage;
     powerplants[_smartMeter].users.push(_user);
   }
 
   //removing users from an existing powerplant
   function removePowerPlantUser(address _smartMeter, address _user) public ownerOnly {
+    require(registered[_smartMeter] == true);
     delete powerplants[_smartMeter].percentages[_user];
     for (uint256 i = 0; i < powerplants[_smartMeter].users.length; i++) {
       if (powerplants[_smartMeter].users[i] == _user) {
