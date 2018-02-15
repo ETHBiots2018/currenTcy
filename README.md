@@ -16,5 +16,5 @@ BIOTS 2018 hackathon project
 ## Usage
 - `npm start`: Starts the webpack dev server
 - open browser at `localhost:9000`
-- login to `MetaMask` with `Restore from key phrase` copied from Ganache under `accounts > MNEMONIC`
-- import diffrent account from ganache via `Import Account` with copied private key from Ganache
+- login to `MetaMask with` Restore from key phrase` copied from Ganache under `accounts > MNEMONIC`
+- import diffrent account to `MetaMask` via `Import Account` with copied private key from Ganache
