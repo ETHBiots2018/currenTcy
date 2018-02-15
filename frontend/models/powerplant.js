@@ -37,4 +37,5 @@ export default class PowerPlant {
     this.contract.removePowerPlantUser(smartMeter, user, { from: window.currentAccount }).then(() => {
       window.alert('User removed');
     });
+  }
 }
