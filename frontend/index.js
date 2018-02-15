@@ -1,13 +1,14 @@
 import Dashboard from './views/dashboard';
 import Register from './views/register';
 import PowerPlant from './views/powerplant';
+import Meter from './views/meter';
 import Layout from './views/layout';
 
 const m = require('mithril');
 
 // Contract address
 // Set as property of window object... better than using globals I guess...
-window.contractAddress = '0xecfcab0a285d3380e488a39b4bb21e777f8a4eac';
+window.contractAddress = '0x345ca3e014aaf5dca488057592ee47305d9b3e10';
 
 // Promisification of getAccounts()
 // Works by ignoring the error and only passing on the result
@@ -39,6 +40,11 @@ getAccounts().then((accounts) => {
     '/powerplant': {
       view() {
         return m(Layout, m(PowerPlant));
+      },
+    },
+    '/meter': {
+      view() {
+        return m(Layout, m(Meter));
       },
     },
   });
