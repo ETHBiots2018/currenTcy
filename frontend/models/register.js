@@ -21,7 +21,11 @@ export default class Register {
 
   static unregister() {
     const meterAddress = document.getElementById('address').value;
-    this.contract.unregSmartMeter(meterAddress, { from: window.currentAccount }).then(() => {
+    this.contract.unregSmartMeter(meterAddress, {
+      from: window.currentAccount,
+      gas: 4712388,
+      gasPrice: 100000000000,
+    }).then(() => {
       window.alert('Smart meter unregistered');
     });
   }

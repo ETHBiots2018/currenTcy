@@ -1,12 +1,25 @@
 pragma solidity ^0.4.4;
 
-// TODO:
-// - Check visibility / privacy: https://solidity.readthedocs.io/en/develop/contracts.html#visibility-and-getters
-// - Security concerns like race conditions, etc.: https://solidity.readthedocs.io/en/develop/security-considerations.html
-
 contract Token {
   /*
-   * Implementation of global variables, as well as mapping
+   * Modifiers
+   */
+
+  // For functions which can only be performed by the owner
+  modifier ownerOnly {
+    require(msg.sender == owner);
+    _;
+  }
+
+  // For functions which can only be performed by smart meters
+  modifier smartMeterOnly {
+    require(registered[msg.sender] == true);
+    _;
+  }
+
+
+  /*
+   * State variables
    */
 
   // Ledger
@@ -15,80 +28,76 @@ contract Token {
   // Map consuming smart meters to their owners
   mapping(address => address) public userOfConsumingSmartMeter;
 
-  // map a boolean true, if a smartmeter is registered
+  // Mapping of trusted smart meters
   mapping(address => bool) registered;
 
   // owner
-  address owner;
+  address public owner;
 
   // set owner
   function Token() public {
     owner = msg.sender;
   }
 
+  // represents joint ownership of a power plant
   struct PowerPlant {
     mapping(address => uint256) percentages;
     address[] users;
   }
 
-  // maps smartmeter to a powerplant with different users which own percentages of it
+  // maps producing smart meter to a power plant with different users which own percentages of it
   mapping(address => PowerPlant) powerplants;
 
-  // For functions which can only be performed by the owner
-  modifier ownerOnly {
-    require(msg.sender == owner);
-    _;
-  }
 
-  // For functions which can only be performed by smartmeters
-  modifier smartMeterOnly {
-    require(registered[msg.sender] == true);
-    _;
-  }
-
-
-/* 
- * Functions which are only allowed to be executed by the owner (EWZ).
- * These functions include: setting and getting a smartmeter to a user,
- * as well as registering and unregistering smartmeters, for the smartMeterOnly modifier
- */
+  /* 
+  * Functions which are only allowed to be executed by the owner (EWZ).
+  * These functions include: setting and getting a smart meter to a user,
+  * as well as registering and unregistering smart meters, for the smartMeterOnly modifier
+  */
 
   // set owner of consuming smart meter
-  function setUser (address _smartMeter, address _user) public ownerOnly {
+  function setUser(address _smartMeter, address _user) public ownerOnly {
+    // _smartMeter must contain the address of a trusted smart meter
+    require(registered[_smartMeter] == true);
     userOfConsumingSmartMeter[_smartMeter] = _user;
   }
 
   // get owner of consuming smart meter
-  function getUser (address _smartMeter) public view ownerOnly returns (address) {
+  function getUser(address _smartMeter) public view ownerOnly returns (address) {
+    // _smartMeter must contain the address of a trusted smart meter
+    require(registered[_smartMeter] == true);
     return userOfConsumingSmartMeter[_smartMeter];
   }
 
-  // register smartmeter
-  function regSmartMeter (address _smartMeter) public ownerOnly {
+  // register smart meter
+  function regSmartMeter(address _smartMeter) public ownerOnly {
     registered[_smartMeter] = true;
   }
 
-  // unregister smart meter (consuming or producing)
+  // unregister smart meter
   function unregSmartMeter(address _smartMeter) public ownerOnly {
     registered[_smartMeter] = false; 
   }
 
-  // Adding a new powerplants
+  // add a power plant
   function addPowerPlant(address _smartMeter) public ownerOnly {
+    // _smartMeter must contain the address of a trusted smart meter
     require(registered[_smartMeter] == true);
     PowerPlant memory plant;
     powerplants[_smartMeter] = plant;
   }
 
-  // Adding new users to an existing powerplant
+  // add a user to an existing power plant
   function addPowerPlantUser(address _smartMeter, address _user, uint256 _percentage) public ownerOnly {
+    // _smartMeter must contain the address of a trusted smart meter
     require(registered[_smartMeter] == true);
     powerplants[_smartMeter].percentages[_user] = _percentage;
     powerplants[_smartMeter].users.push(_user);
   }
 
-  //removing users from an existing powerplant
+  // remove a user from a power plant
   function removePowerPlantUser(address _smartMeter, address _user) public ownerOnly {
+    // _smartMeter must contain the address of a trusted smart meter
     require(registered[_smartMeter] == true);
     powerplants[_smartMeter].percentages[_user] = 0;
     for (uint256 i = 0; i < powerplants[_smartMeter].users.length; i++) {
@@ -100,40 +109,40 @@ contract Token {
 
 
   /*
-   * The following functions are only for the smartmeters
+   * The following functions are only for the smart meters
    * they are for production and consumption of electricity,
    * and the token balance management of each user
    */
 
-  // Credit the User tokens for Wh produced
-  function produce (uint256 wh) public smartMeterOnly {
-    var plant = powerplants[msg.sender];
+  // credit the User tokens for Wh produced
+  function produce(uint256 wh) public smartMeterOnly {
+    PowerPlant storage plant = powerplants[msg.sender];
     for (uint256 i = 0; i < plant.users.length; i++) {
       // for each user associated with the plant, increment balance
-      var currentUser = plant.users[i];
+      address currentUser = plant.users[i];
       balanceOf[currentUser] += whToToken(wh) * int256(plant.percentages[currentUser]) / 100;
     }
   }
 
-  // Deduction of tokens for Wh consumed
-  function consume (uint256 wh) public smartMeterOnly {
+  // deduction of tokens for Wh consumed
+  function consume(uint256 wh) public smartMeterOnly {
     balanceOf[userOfConsumingSmartMeter[msg.sender]] -= whToToken(wh);
   }
 
 
   /*
-   * Following functions are only mathematical functions for the token <-> wh conversion
+   * Private functions for the token <-> Wh conversion
    */
 
-    // Wh -> Token conversion
-  function whToToken (uint256 wh) public pure returns (int256) {
+  // Wh -> Token conversion
+  function whToToken(uint256 wh) private pure returns (int256) {
     // As of right now, this performs a 1:1 conversion of Wh to tokens
     // May be adapted in future implementations
     return int256(wh);
   }
 
   // Token -> Wh conversion
-  function tokenToWh (int256 token) public pure returns (uint256) {
+  function tokenToWh(int256 token) private pure returns (uint256) {
     // As of right now, this performs a 1:1 conversion of Wh to tokens
     // May be adapted in future implementations
     return uint256(token);

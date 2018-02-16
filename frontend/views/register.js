@@ -19,7 +19,7 @@ export default class Meter {
         m('form', [
           m('.form-group', [
             m('label[for=address]', 'Smart Meter Address'),
-            m('input.form-control#address', { id: 'address', placeholder: 'Enter smart meter adress' }),
+            m('input.form-control#address', { id: 'address', placeholder: 'Enter smart meter address' }),
           ]),
           m('button.btn.btn-primary.mr-3#registerButton', { onclick: Model.register.bind(this.model) }, 'Register'),
           m('button.btn.btn-primary#unregisterButton', { onclick: Model.unregister.bind(this.model) }, 'Unregister'),
